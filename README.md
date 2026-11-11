@@ -190,8 +190,15 @@ docs/site.yml     ─┘        汇总成 Python 数据        写进 window.__X
 .github/workflows/ci.yml    工作流定义
 ```
 
-**仓库**：https://github.com/ColdRolledSteel1/github.io
-**网址**：https://coldrolledsteel1.github.io/github.io/
+**仓库**：https://github.com/ColdRolledSteel1/ColdRolledSteel1.github.io
+**网址**：https://coldrolledsteel1.github.io/
+
+仓库名是 `<用户名>.github.io`，属于**用户站点**，所以网址在域名根目录，没有子路径。
+本地 git remote 若还指着旧仓库名，用这条改：
+
+```bash
+git remote set-url origin https://github.com/ColdRolledSteel1/ColdRolledSteel1.github.io.git
+```
 
 ### 日常发布流程
 

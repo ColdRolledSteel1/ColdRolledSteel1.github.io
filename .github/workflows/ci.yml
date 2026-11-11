@@ -39,8 +39,8 @@ jobs:
 
       - name: 构建站点
         env:
-          # 仓库名是 github.io，属于项目站点，网址带子路径
-          SITE_URL: https://coldrolledsteel1.github.io/github.io/
+          # 仓库名是 ColdRolledSteel1.github.io，属于用户站点，网址就在域名根目录下
+          SITE_URL: https://coldrolledsteel1.github.io/
         run: mkdocs build --clean
 
       - name: 发布到 gh-pages 分支

@@ -6,9 +6,9 @@
 # ==========================================================================
 
 site_name: 王昕博
-# 站点根地址。线上是 GitHub Pages 的项目站点（仓库名 github.io，网址带子路径）；
+# 站点根地址。仓库名是 ColdRolledSteel1.github.io，属于用户站点，网址就在域名根目录；
 # 工作流里用 SITE_URL 环境变量覆盖，本地构建用这个默认值即可
-site_url: !ENV [SITE_URL, "https://coldrolledsteel1.github.io/github.io/"]
+site_url: !ENV [SITE_URL, "https://coldrolledsteel1.github.io/"]
 site_description: 王昕博的个人网站
 site_author: 王昕博
 
