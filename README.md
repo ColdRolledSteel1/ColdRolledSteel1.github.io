@@ -115,6 +115,8 @@ guestbook:
 
 `mkdocs.yml` 的 `nav:`，一行一项。顺序就是左侧显示的顺序。
 
+第一项 `首页: index.md` 指向照片 + 小诗那一页；深蓝标题条也指向首页，两者效果相同。
+
 ### 7. 改配色 / 字号 / 页面宽度
 
 `docs/assets/css/base.css` 顶部的 `:root`：

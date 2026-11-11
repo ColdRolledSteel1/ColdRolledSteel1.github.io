@@ -109,7 +109,9 @@
   }
 
   .side__item {
-    flex: 1 1 25%;
+    /* 五个导航项平分一行：25% → 20% */
+    flex: 1 1 20%;
+    padding: 6px 4px;
     text-align: center;
     border-bottom: 0;
     border-right: 1px solid #2f5478;
