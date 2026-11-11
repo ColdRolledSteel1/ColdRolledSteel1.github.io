@@ -1,0 +1,98 @@
+@charset "utf-8";
+/* ==========================================================================
+   base.css — 变量、重置、页面底层
+   风格：2000 年代企业站 —— 灰底、白正文、深蓝标题条，无圆角无阴影
+   ========================================================================== */
+
+:root {
+  /* 色彩 */
+  --page: #d5d5d5;
+  --paper: #ffffff;
+  --navy: #0b2b4a;
+  --navy-2: #123a61;
+  --navy-hover: #1d5288;
+  --ink: #222222;
+  --ink-soft: #666666;
+  --link: #0033cc;
+  --link-visited: #551a8b;
+  --border: #9a9a9a;
+  --border-soft: #c8c8c8;
+
+  /* 字体 */
+  --font-body: "SimSun", "宋体", "Songti SC", Georgia, serif;
+  --font-head: "Times New Roman", "SimSun", "宋体", "Songti SC", serif;
+
+  /* 尺寸 */
+  --page-w: 1400px;
+  --side-w: 180px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 10px 8px 14px;
+  background: var(--page);
+  color: var(--ink);
+  font: 13px/1.65 var(--font-body);
+}
+
+img {
+  max-width: 100%;
+}
+
+h1,
+h2,
+h3,
+p,
+ul,
+ol,
+dl,
+dd,
+figure {
+  margin: 0;
+}
+
+ul,
+ol {
+  padding: 0;
+  list-style: none;
+}
+
+a {
+  color: var(--link);
+  text-decoration: underline;
+}
+
+a:visited {
+  color: var(--link-visited);
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+/* 键盘可达性：保留清晰描边 */
+:focus-visible {
+  outline: 1px dotted #000;
+  outline-offset: 2px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}

@@ -1,0 +1,137 @@
+{# ==========================================================================
+   main.html — 整站唯一模板（左导航 + 标题条 + 正文 + 大图查看）
+   --------------------------------------------------------------------------
+   栏目由 `section` 决定，正文数据由 hooks.py 汇总后塞进来。
+   版式与改造前的 index.html 一致，只把「单页 hash 切换」换成了「一个栏目一个页面」。
+   ========================================================================== #}
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% if section == 'home' %}{{ config.site_name }}{% else %}{{ page.title }} - {{ config.site_name }}{% endif %}</title>
+
+    <!-- 样式：base(基础) → layout(骨架) → components(通用组件) → pages(各栏目) -->
+    <link rel="stylesheet" href="{{ 'assets/css/base.css'|url }}" />
+    <link rel="stylesheet" href="{{ 'assets/css/layout.css'|url }}" />
+    <link rel="stylesheet" href="{{ 'assets/css/components.css'|url }}" />
+    <link rel="stylesheet" href="{{ 'assets/css/pages.css'|url }}" />
+  </head>
+
+  <body data-view="{{ section }}">
+    <div class="page">
+      <div class="cols">
+        <!-- ============ 左侧导航 ============ -->
+        <nav class="side" aria-label="主导航">
+          {%- for item in nav %}
+          {%- if item.is_page %}
+          <a class="side__item{% if item.url == page.url %} is-active{% endif %}" href="{{ item.url|url }}"{% if item.url == page.url %} aria-current="page"{% endif %}>{{ item.title }}</a>
+          {%- endif %}
+          {%- endfor %}
+        </nav>
+
+        <div class="main">
+          <!-- ============ 标题条 ============ -->
+          <a class="banner" href="{{ nav.homepage.url|url }}" title="回到首页">
+            <span id="bannerName">{{ config.site_name }}</span>
+          </a>
+
+          <!-- ============ 正文 ============ -->
+          <main class="content" id="stage">
+            {%- if section == 'home' %}
+            <!-- 首页：照片 + 小诗（数据来自 docs/gallery.yml） -->
+            <section class="view view--home" data-view="home">
+              <button class="hero" id="hero" type="button" aria-label="换一张照片">
+                <span class="hero__photo">
+                  <img class="hero__img" id="heroImg" src="" alt="" width="420" height="315" />
+                </span>
+                <span class="hero__poem" id="heroPoem"></span>
+              </button>
+            </section>
+            {%- elif section == 'novels' %}
+            <!-- 小说：只列标题，点标题展开正文 -->
+            <section class="view" data-view="novels">
+              <h2 class="h2">小说</h2>
+              {%- if page.file.src_uri == 'novels/index.md' %}
+              <ul class="novels" id="novelList"></ul>
+              {%- else %}
+              <ul class="novels">
+                <li class="novel is-open">
+                  <span class="novel__title">{{ page.title }}</span>
+                  <div class="novel__body">{{ page.content }}</div>
+                </li>
+              </ul>
+              {%- endif %}
+            </section>
+            {%- elif section == 'photos' %}
+            <!-- 照片（数据来自 docs/photos/ 里的图片文件） -->
+            <section class="view" data-view="photos">
+              <h2 class="h2">照片</h2>
+              <ul class="photos" id="photoGrid"></ul>
+            </section>
+            {%- elif section == 'contact' %}
+            <!-- 联系（数据来自 docs/site.yml） -->
+            <section class="view" data-view="contact">
+              <h2 class="h2">联系</h2>
+              <dl class="contact" id="contactCard"></dl>
+            </section>
+            {%- elif section == 'guestbook' %}
+            <!-- 留言 -->
+            <section class="view" data-view="guestbook">
+              <h2 class="h2">留言</h2>
+
+              <form class="gb" id="gbForm">
+                <label class="gb__row">
+                  <span class="gb__label">称呼</span>
+                  <input class="input" id="gbName" name="name" type="text" maxlength="16" autocomplete="off" />
+                </label>
+                <label class="gb__row">
+                  <span class="gb__label">留言</span>
+                  <textarea class="input input--area" id="gbText" name="text" maxlength="500" rows="5" required></textarea>
+                </label>
+                <div class="gb__actions">
+                  <button class="btn" type="submit">提交</button>
+                </div>
+              </form>
+
+              <div class="gb__bar">
+                <button class="linkbtn gb__admin" id="gbAdmin" type="button">管理</button>
+              </div>
+              <ul class="gb__list" id="gbList"></ul>
+            </section>
+            {%- endif %}
+          </main>
+        </div>
+      </div>
+    </div>
+
+    <!-- 大图查看 -->
+    <div class="lightbox" id="lightbox" hidden role="dialog" aria-modal="true">
+      <img class="lightbox__img" id="lbImg" src="" alt="" />
+      <button class="lightbox__close" id="lbClose" type="button" aria-label="关闭">×</button>
+      <button class="lightbox__nav lightbox__nav--prev" id="lbPrev" type="button" aria-label="上一张">‹</button>
+      <button class="lightbox__nav lightbox__nav--next" id="lbNext" type="button" aria-label="下一张">›</button>
+    </div>
+
+    <!-- 数据：构建时由 hooks.py 汇总写入，只给当前栏目加载对应的一份 -->
+    <script>
+      window.__SITE__ = {{ site_data|tojson }};
+      {%- if section == 'home' %}
+      window.__GALLERY__ = {{ gallery|tojson }};
+      {%- elif section == 'novels' %}
+      window.__NOVELS__ = {{ novel_list|tojson }};
+      {%- elif section == 'photos' %}
+      window.__PHOTOS__ = {{ photo_list|tojson }};
+      {%- endif %}
+    </script>
+
+    <!-- 逻辑 -->
+    <script src="{{ 'assets/js/core.js'|url }}"></script>
+    <script src="{{ 'assets/js/hero.js'|url }}"></script>
+    <script src="{{ 'assets/js/novels.js'|url }}"></script>
+    <script src="{{ 'assets/js/photos.js'|url }}"></script>
+    <script src="{{ 'assets/js/contact.js'|url }}"></script>
+    <script src="{{ 'assets/js/guestbook.js'|url }}"></script>
+    <script src="{{ 'assets/js/main.js'|url }}"></script>
+  </body>
+</html>

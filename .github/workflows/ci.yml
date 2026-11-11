@@ -1,0 +1,56 @@
+name: 构建并发布站点
+
+# 每次 push 到 main 分支时构建，也可以在 Actions 页面手动点一下触发
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# 同一时间只跑一个发布任务；新的 push 会取消正在跑的旧任务
+concurrency:
+  group: pages-deploy
+  cancel-in-progress: true
+
+# 需要写权限才能把构建结果推到 gh-pages 分支
+permissions:
+  contents: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      - name: 安装 Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          # 缓存 pip 下载，加快重复构建
+          cache: pip
+          cache-dependency-path: requirements.txt
+
+      - name: 安装 MkDocs
+        # 本站使用自写主题（theme.name: null + theme/main.html），
+        # 因此只需要 mkdocs，不需要 mkdocs-material
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: 构建站点
+        env:
+          # 仓库名是 github.io，属于项目站点，网址带子路径
+          SITE_URL: https://coldrolledsteel1.github.io/github.io/
+        run: mkdocs build --clean
+
+      - name: 发布到 gh-pages 分支
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: ./site
+          # 每次用孤儿提交重建 gh-pages，避免历史堆积
+          force_orphan: true
+          user_name: github-actions[bot]
+          user_email: github-actions[bot]@users.noreply.github.com
+          commit_message: "deploy: ${{ github.event.head_commit.message }}"

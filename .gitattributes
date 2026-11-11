@@ -1,0 +1,13 @@
+# 统一换行符，避免 Windows 本地的 CRLF 影响 Ubuntu 上的构建
+* text=auto eol=lf
+
+# Windows 批处理必须保留 CRLF
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# 图片等二进制文件不做换行转换
+*.jpg binary
+*.jpeg binary
+*.png binary
+*.gif binary
+*.webp binary

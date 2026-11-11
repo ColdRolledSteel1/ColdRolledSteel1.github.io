@@ -1,0 +1,47 @@
+# ==========================================================================
+# mkdocs.yml — 站点配置
+# --------------------------------------------------------------------------
+# 构建：mkdocs build      预览：mkdocs serve
+# 内容在 docs/，版式在 theme/main.html，样式脚本在 docs/assets/
+# ==========================================================================
+
+site_name: 王昕博
+# 站点根地址。线上是 GitHub Pages 的项目站点（仓库名 github.io，网址带子路径）；
+# 工作流里用 SITE_URL 环境变量覆盖，本地构建用这个默认值即可
+site_url: !ENV [SITE_URL, "https://coldrolledsteel1.github.io/github.io/"]
+site_description: 王昕博的个人网站
+site_author: 王昕博
+
+docs_dir: docs
+site_dir: site
+
+# 每个栏目一个目录（URL 结尾带斜杠），和原来的 #/novels 视觉一致
+use_directory_urls: true
+
+# 自带主题，只有 main.html 一个模板：整站结构与原来一模一样
+theme:
+  name: null
+  custom_dir: theme
+
+# 左侧四个导航项（首页由标题条点击进入，不占导航位）
+nav:
+  - 小说: novels/index.md
+  - 照片: photos/index.md
+  - 联系: contact.md
+  - 留言: guestbook.md
+
+# 构建时把小说、照片、首页仓库汇总成页面能直接用到的数据
+hooks:
+  - hooks.py
+
+# 不需要搜索插件（本站没有搜索框）
+plugins: []
+
+markdown_extensions:
+  # 支持每篇小说开头 --- title: ... order: ... --- 的元信息
+  - meta
+
+validation:
+  # novels/ 下的文章只在「小说」列表里展开显示，不单独进导航，不用提示
+  omitted_files: ignore
+  absolute_links: ignore
