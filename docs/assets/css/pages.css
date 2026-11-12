@@ -83,7 +83,8 @@
   margin-bottom: 0;
 }
 
-/* 正文防溢出：段落、长英文串、代码块都必须在框内换行，不许顶出页面 */
+/* 正文一律不许顶出白框：
+   长英文串 / 网址 / 无空格长句都要在框内折行，中文本来就会正常折 */
 .novel__body {
   overflow-wrap: anywhere;
 }
@@ -93,8 +94,7 @@
   height: auto;
 }
 
-/* 万一正文里出现缩进代码块（比如段落开头打了 4 个空格或 Tab），
-   默认的 pre 不会换行，会把整页撑出横向滚动条 —— 这里强制折行 */
+/* 代码块（正文里多打了缩进才会出现）也要折行，否则会把整页撑出横向滚动条 */
 .novel__body pre {
   max-width: 100%;
   margin: 0.8em 0;
@@ -112,6 +112,18 @@
 .novel__body pre code {
   font-family: var(--font-body);
   white-space: inherit;
+}
+
+.novel__body table {
+  max-width: 100%;
+  border-collapse: collapse;
+}
+
+.novel__body blockquote {
+  margin: 0.8em 0;
+  padding-left: 12px;
+  border-left: 3px solid #cccccc;
+  color: #444444;
 }
 
 /* --------------------------------------------------- 照片 */

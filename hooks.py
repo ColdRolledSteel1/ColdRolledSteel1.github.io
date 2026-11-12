@@ -53,6 +53,36 @@ def _load_yaml_text(text):
     return data if isinstance(data, dict) else {}
 
 
+def _deindent(body):
+    """整篇都被缩进时，把公共缩进去掉。
+
+    从 Word、网页或别处粘贴正文时，常见整篇文章每行前面都带 4 个空格或
+    一个 Tab。Markdown 会把这些行当成代码块，渲染成 <pre>：不自动换行、
+    整段挤成一行，直接把页面撑出横向滚动条。
+
+    只在「所有非空行都带 4 空格或 Tab」时才动手，正常排版的文章不受影响。
+    """
+    lines = body.split("\n")
+    filled = [line for line in lines if line.strip()]
+    if not filled or not all(re.match(r"(?: {4}|\t)", line) for line in filled):
+        return body
+
+    # 按最短的那一行算公共缩进，避免把嵌套内容的层级也一起抹平
+    cut = min(len(re.match(r"[ \t]*", line).group(0).expandtabs(4)) for line in filled)
+
+    out = []
+    for line in lines:
+        if not line.strip():
+            out.append("")
+            continue
+        col, index = 0, 0
+        while index < len(line) and col < cut and line[index] in " \t":
+            col += 4 if line[index] == "\t" else 1
+            index += 1
+        out.append(line[index:])
+    return "\n".join(out)
+
+
 def _order(value):
     try:
         return float(value)
@@ -112,7 +142,7 @@ def _read_novels(docs_dir, markdown_extensions):
         items.append({
             "title": str(meta.get("title") or os.path.splitext(name)[0]),
             "order": _order(meta.get("order")),
-            "html": converter.convert(body),
+            "html": converter.convert(_deindent(body)),
         })
 
     items.sort(key=lambda item: (item["order"], item["title"]))
@@ -153,6 +183,19 @@ def _section(page):
         if uri == name + ".md" or uri.startswith(name + "/"):
             return name
     return "home"
+
+
+def on_page_markdown(markdown_text, *, page, config, **kwargs):
+    """单篇小说页的正文由 MkDocs 自己转，同样要先去掉整篇缩进。"""
+    uri = page.file.src_uri
+    if not uri.startswith("novels/") or uri == "novels/index.md":
+        return markdown_text
+
+    match = FRONT_MATTER.match(markdown_text)
+    if not match:
+        return _deindent(markdown_text)
+    prefix, body = markdown_text[:match.end()], markdown_text[match.end():]
+    return prefix + _deindent(body)
 
 
 def on_page_context(context, *, page, config, nav, **kwargs):
