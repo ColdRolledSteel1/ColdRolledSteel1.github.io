@@ -1,0 +1,64 @@
+@charset "utf-8";
+/* ==========================================================================
+   components.css — 通用组件：标题、按钮、输入框、链接式按钮
+   ========================================================================== */
+
+/* --------------------------------------------------- 栏目标题 */
+.h2 {
+  margin: 0 0 14px;
+  font: 700 22px/1.3 var(--font-head);
+  color: #111111;
+}
+
+/* --------------------------------------------------- 按钮（2000 年代凸起按钮） */
+.btn {
+  padding: 3px 18px;
+  border: 1px solid #6f6f6f;
+  background: #e9e9e9;
+  box-shadow: inset 1px 1px 0 #ffffff, inset -1px -1px 0 #b0b0b0;
+  color: #000000;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background: #f4f4f4;
+}
+
+.btn:active {
+  background: #dcdcdc;
+  box-shadow: inset 1px 1px 0 #b0b0b0;
+}
+
+/* --------------------------------------------------- 输入框 */
+.input {
+  width: 100%;
+  padding: 3px 5px;
+  border: 1px solid #7a7a7a;
+  background: #ffffff;
+  color: var(--ink);
+  font: 13px/1.6 var(--font-body);
+}
+
+.input--area {
+  resize: vertical;
+  min-height: 90px;
+}
+
+/* --------------------------------------------------- 文字按钮（蓝字下划线） */
+.linkbtn {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--link);
+  font-size: 12px;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.linkbtn:hover {
+  color: #0000ff;
+}
+
+.linkbtn--danger {
+  color: #a00000;
+}

@@ -1,0 +1,86 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>留言 - 王昕博</title>
+
+    <!-- 样式：base(基础) → layout(骨架) → components(通用组件) → pages(各栏目) -->
+    <link rel="stylesheet" href="../assets/css/base.css" />
+    <link rel="stylesheet" href="../assets/css/layout.css" />
+    <link rel="stylesheet" href="../assets/css/components.css" />
+    <link rel="stylesheet" href="../assets/css/pages.css" />
+  </head>
+
+  <body data-view="guestbook">
+    <div class="page">
+      <div class="cols">
+        <!-- ============ 左侧导航 ============ -->
+        <nav class="side" aria-label="主导航">
+          <a class="side__item" href="..">首页</a>
+          <a class="side__item" href="../novels/">小说</a>
+          <a class="side__item" href="../photos/">照片</a>
+          <a class="side__item" href="../contact/">联系</a>
+          <a class="side__item is-active" href="./" aria-current="page">留言</a>
+        </nav>
+
+        <div class="main">
+          <!-- ============ 标题条 ============ -->
+          <a class="banner" href=".." title="回到首页">
+            <span id="bannerName">王昕博</span>
+          </a>
+
+          <!-- ============ 正文 ============ -->
+          <main class="content" id="stage">
+            <!-- 留言 -->
+            <section class="view" data-view="guestbook">
+              <h2 class="h2">留言</h2>
+
+              <form class="gb" id="gbForm">
+                <label class="gb__row">
+                  <span class="gb__label">称呼</span>
+                  <input class="input" id="gbName" name="name" type="text" maxlength="16" autocomplete="off" />
+                </label>
+                <label class="gb__row">
+                  <span class="gb__label">留言</span>
+                  <textarea class="input input--area" id="gbText" name="text" maxlength="500" rows="5" required></textarea>
+                </label>
+                <div class="gb__actions">
+                  <button class="btn" type="submit">提交</button>
+                </div>
+              </form>
+
+              <div class="gb__bar">
+                <button class="linkbtn gb__admin" id="gbAdmin" type="button">管理</button>
+              </div>
+              <ul class="gb__list" id="gbList"></ul>
+            </section>
+          </main>
+        </div>
+      </div>
+    </div>
+
+    <!-- 大图查看 -->
+    <div class="lightbox" id="lightbox" hidden role="dialog" aria-modal="true">
+      <img class="lightbox__img" id="lbImg" src="" alt="" />
+      <button class="lightbox__close" id="lbClose" type="button" aria-label="关闭">×</button>
+      <button class="lightbox__nav lightbox__nav--prev" id="lbPrev" type="button" aria-label="上一张">‹</button>
+      <button class="lightbox__nav lightbox__nav--next" id="lbNext" type="button" aria-label="下一张">›</button>
+    </div>
+
+    <!-- 数据：构建时由 hooks.py 汇总写入，只给当前栏目加载对应的一份 -->
+    <script>
+      window.__SITE__ = {"email": "drbbx1965@gmail.com", "guestbook": {"adminPassword": "aero", "storageKey": "guestbook-v1"}, "name": "\u738b\u6615\u535a", "wechat": "yjq-07-07w"};
+    </script>
+
+    <!-- 逻辑 -->
+    <script src="../assets/js/core.js"></script>
+    <script src="../assets/js/hero.js"></script>
+    <script src="../assets/js/novels.js"></script>
+    <script src="../assets/js/photos.js"></script>
+    <script src="../assets/js/contact.js"></script>
+    <script src="../assets/js/guestbook.js"></script>
+    <script src="../assets/js/main.js"></script>
+  </body>
+</html>

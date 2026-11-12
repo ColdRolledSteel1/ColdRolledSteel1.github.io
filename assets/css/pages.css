@@ -1,0 +1,309 @@
+@charset "utf-8";
+/* ==========================================================================
+   pages.css — 各栏目：首页、小说、照片、联系、留言、大图
+   ========================================================================== */
+
+/* --------------------------------------------------- 首页 */
+.hero {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  text-align: center;
+  cursor: pointer;
+}
+
+.hero__photo {
+  display: inline-block;
+}
+
+.hero__img {
+  display: block;
+  width: 620px;
+  max-width: 100%;
+  height: auto;
+  border: 1px solid var(--border);
+  background: #f0f0f0;
+}
+
+.hero__poem {
+  display: block;
+  width: 620px;
+  max-width: 100%;
+  margin: 16px auto 0;
+  padding: 0;
+  color: #222222;
+  font: 16px/1.95 var(--font-head);
+  letter-spacing: 0.04em;
+  white-space: pre-line;
+}
+
+/* --------------------------------------------------- 小说 */
+.novels {
+  border-top: 1px solid var(--border-soft);
+}
+
+.novel {
+  padding: 7px 0;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.novel__link {
+  font: 700 15px/1.6 var(--font-head);
+  color: var(--link);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* 单篇页里标题已经展开，按文章标题处理，不做成链接 */
+.novel__title {
+  font: 700 15px/1.6 var(--font-head);
+  color: #111111;
+}
+
+.novel__body {
+  display: none;
+  margin: 8px 0 10px;
+  max-width: 40em;
+  font: 14px/1.95 var(--font-head);
+  color: #111111;
+}
+
+.novel.is-open .novel__body {
+  display: block;
+}
+
+.novel__body p {
+  margin-bottom: 0.7em;
+  text-indent: 2em;
+}
+
+.novel__body p:last-child {
+  margin-bottom: 0;
+}
+
+/* 正文一律不许顶出白框：
+   长英文串 / 网址 / 无空格长句都要在框内折行，中文本来就会正常折 */
+.novel__body {
+  overflow-wrap: anywhere;
+}
+
+.novel__body img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* 代码块（正文里多打了缩进才会出现）也要折行，否则会把整页撑出横向滚动条 */
+.novel__body pre {
+  max-width: 100%;
+  margin: 0.8em 0;
+  padding: 8px 10px;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  background: #f4f4f4;
+  border: 1px solid #dddddd;
+  font-family: var(--font-body);
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.novel__body pre code {
+  font-family: var(--font-body);
+  white-space: inherit;
+}
+
+.novel__body table {
+  max-width: 100%;
+  border-collapse: collapse;
+}
+
+.novel__body blockquote {
+  margin: 0.8em 0;
+  padding-left: 12px;
+  border-left: 3px solid #cccccc;
+  color: #444444;
+}
+
+/* --------------------------------------------------- 照片 */
+.photos {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.photos__item {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: zoom-in;
+}
+
+.photos__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--border);
+  background: #f0f0f0;
+}
+
+/* --------------------------------------------------- 联系 */
+.contact {
+  font-size: 13px;
+}
+
+.contact__row {
+  padding: 4px 0;
+}
+
+.contact__label {
+  display: inline-block;
+  width: 60px;
+  color: var(--ink-soft);
+}
+
+.contact__value {
+  display: inline;
+}
+
+/* --------------------------------------------------- 留言 */
+.gb {
+  margin: 0 0 16px;
+}
+
+.gb__row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.gb__label {
+  flex: none;
+  width: 48px;
+  padding-top: 3px;
+  color: var(--ink-soft);
+}
+
+.gb__actions {
+  padding-left: 58px;
+}
+
+.gb__bar {
+  padding: 6px 0;
+  border-top: 1px solid var(--border-soft);
+  text-align: right;
+}
+
+.gb__admin.is-on {
+  color: #a00000;
+}
+
+.gb__list {
+  border-top: 1px solid var(--border-soft);
+}
+
+.gb__list > li {
+  padding: 9px 0;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.gb__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+
+.gb__name {
+  color: #000000;
+  font-weight: 700;
+}
+
+.gb__text {
+  margin-top: 3px;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* --------------------------------------------------- 大图查看 */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  background: #000000;
+}
+
+.lightbox[hidden] {
+  display: none;
+}
+
+.lightbox__img {
+  max-width: 92vw;
+  max-height: 86vh;
+  border: 1px solid #ffffff;
+  background: #ffffff;
+}
+
+.lightbox__close,
+.lightbox__nav {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 1px solid #000000;
+  background: #e9e9e9;
+  color: #000000;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.lightbox__close {
+  top: 12px;
+  right: 12px;
+}
+
+.lightbox__nav--prev {
+  left: 12px;
+  top: 50%;
+  margin-top: -14px;
+}
+
+.lightbox__nav--next {
+  right: 12px;
+  top: 50%;
+  margin-top: -14px;
+}
+
+/* --------------------------------------------------- 响应式 */
+@media (max-width: 820px) {
+  .photos {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .h2 {
+    font-size: 19px;
+  }
+}
+
+@media (max-width: 420px) {
+  .photos {
+    grid-template-columns: 1fr;
+  }
+
+  .gb__actions {
+    padding-left: 0;
+    text-align: right;
+  }
+}

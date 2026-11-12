@@ -1,0 +1,73 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>王昕博</title>
+
+    <!-- 样式：base(基础) → layout(骨架) → components(通用组件) → pages(各栏目) -->
+    <link rel="stylesheet" href="assets/css/base.css" />
+    <link rel="stylesheet" href="assets/css/layout.css" />
+    <link rel="stylesheet" href="assets/css/components.css" />
+    <link rel="stylesheet" href="assets/css/pages.css" />
+  </head>
+
+  <body data-view="home">
+    <div class="page">
+      <div class="cols">
+        <!-- ============ 左侧导航 ============ -->
+        <nav class="side" aria-label="主导航">
+          <a class="side__item is-active" href="." aria-current="page">首页</a>
+          <a class="side__item" href="novels/">小说</a>
+          <a class="side__item" href="photos/">照片</a>
+          <a class="side__item" href="contact/">联系</a>
+          <a class="side__item" href="guestbook/">留言</a>
+        </nav>
+
+        <div class="main">
+          <!-- ============ 标题条 ============ -->
+          <a class="banner" href="." title="回到首页">
+            <span id="bannerName">王昕博</span>
+          </a>
+
+          <!-- ============ 正文 ============ -->
+          <main class="content" id="stage">
+            <!-- 首页：照片 + 小诗（数据来自 docs/gallery.yml） -->
+            <section class="view view--home" data-view="home">
+              <button class="hero" id="hero" type="button" aria-label="换一张照片">
+                <span class="hero__photo">
+                  <img class="hero__img" id="heroImg" src="" alt="" width="420" height="315" />
+                </span>
+                <span class="hero__poem" id="heroPoem"></span>
+              </button>
+            </section>
+          </main>
+        </div>
+      </div>
+    </div>
+
+    <!-- 大图查看 -->
+    <div class="lightbox" id="lightbox" hidden role="dialog" aria-modal="true">
+      <img class="lightbox__img" id="lbImg" src="" alt="" />
+      <button class="lightbox__close" id="lbClose" type="button" aria-label="关闭">×</button>
+      <button class="lightbox__nav lightbox__nav--prev" id="lbPrev" type="button" aria-label="上一张">‹</button>
+      <button class="lightbox__nav lightbox__nav--next" id="lbNext" type="button" aria-label="下一张">›</button>
+    </div>
+
+    <!-- 数据：构建时由 hooks.py 汇总写入，只给当前栏目加载对应的一份 -->
+    <script>
+      window.__SITE__ = {"email": "drbbx1965@gmail.com", "guestbook": {"adminPassword": "aero", "storageKey": "guestbook-v1"}, "name": "\u738b\u6615\u535a", "wechat": "yjq-07-07w"};
+      window.__GALLERY__ = [{"alt": "\u5854\u540a\u548c\u811a\u624b\u67b6", "open": false, "poem": "\u661f\u671f\u4e09\n\u4f60\u7528\u811a\u624b\u67b6\u548c\u5854\u540a\u6302\u8d77\u611f\u53f9\u53f7\n\u62ff\u4e0d\u4e0b\u6765", "src": "./assets/img/hero/567d8352c7e1fdb8611f81469d8b4506.jpg"}, {"alt": "\u6b63\u5348\u7684\u5929\u7a7a\u4e0e\u8349\u5730", "open": false, "poem": "\u5149\u843d\u5728\u80a9\u4e0a\n\u50cf\u4e00\u53e5\u6ca1\u8bf4\u51fa\u53e3\u7684\u8bdd", "src": "./assets/img/hero/02.jpg"}, {"alt": "\u9ec4\u660f\u7684\u4e18\u9675", "open": false, "poem": "\u843d\u65e5\u628a\u5f71\u5b50\u62c9\u957f\n\u508d\u665a\u5c31\u6709\u4e86\u53bb\u5904", "src": "./assets/img/hero/03.jpg"}, {"alt": "\u96e8\u540e\u7684\u9634\u5929", "open": false, "poem": "\u96e8\u505c\u4e4b\u540e\n\u73bb\u7483\u66ff\u6211\u8bb0\u7740\u90a3\u573a\u96e8", "src": "./assets/img/hero/04.jpg"}, {"alt": "\u66ae\u8272\u4e2d\u7684\u5c71\u5f71", "open": false, "poem": "\u5929\u8272\u8f6c\u84dd\u7684\u90a3\u51e0\u5206\u949f\n\u4ec0\u4e48\u90fd\u8fd8\u6765\u5f97\u53ca", "src": "./assets/img/hero/05.jpg"}, {"alt": "\u591c\u91cc\u7684\u706f\u706b", "open": false, "poem": "\u706f\u4e00\u76cf\u4e00\u76cf\u4eae\u8d77\n\u57ce\u5e02\u5f00\u59cb\u5c0f\u58f0\u8bf4\u8bdd", "src": "./assets/img/hero/06.jpg"}, {"alt": "\u6d77\u4e0e\u5929\u7684\u4ea4\u754c", "open": false, "poem": "\u6d77\u628a\u8bdd\u8bf4\u5b8c\n\u5c31\u9000\u56de\u5f88\u8fdc\u7684\u5730\u65b9", "src": "./assets/img/hero/07.jpg"}, {"alt": "\u684c\u4e0a\u7684\u5149\u6591", "open": false, "poem": "\u4e0b\u5348\u4e09\u70b9\n\u5149\u5728\u684c\u4e0a\u505c\u4e86\u4e00\u4f1a\u513f", "src": "./assets/img/hero/08.jpg"}];
+    </script>
+
+    <!-- 逻辑 -->
+    <script src="assets/js/core.js"></script>
+    <script src="assets/js/hero.js"></script>
+    <script src="assets/js/novels.js"></script>
+    <script src="assets/js/photos.js"></script>
+    <script src="assets/js/contact.js"></script>
+    <script src="assets/js/guestbook.js"></script>
+    <script src="assets/js/main.js"></script>
+  </body>
+</html>
