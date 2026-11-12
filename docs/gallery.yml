@@ -10,11 +10,12 @@
 # 新增：把照片放进 docs/assets/img/hero/，在下面加一条即可。
 # ==========================================================================
 
-- image: assets/img/hero/01.jpg
-  alt: 晨雾中的山脊
+- image: assets/img/hero/567d8352c7e1fdb8611f81469d8b4506.jpg
+  alt: 塔吊和脚手架
   poem: |
-    雾还没散
-    山先替我醒了
+    星期三
+    你用脚手架和塔吊挂起感叹号
+    拿不下来
 
 - image: assets/img/hero/02.jpg
   alt: 正午的天空与草地
